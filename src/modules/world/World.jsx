@@ -4,7 +4,7 @@ import Globe from "react-globe.gl";
 function World({
   showAtmosphere = true,
   showGraticules = true,
-  shouldAutoRotate = true,
+  shouldAutoRotate,
   polygonsData,
   polygonCapColor = () => {
     return "rgba(200, 0, 0, 0.6)";
@@ -18,18 +18,29 @@ function World({
   polygonAltitude = function () {
     return 0.25;
   },
+  currentActiveTool,
 }) {
   const globeEl = useRef();
   const [transitionDuration, setTransitionDuration] = useState(1000);
 
-  // Enable auto rotation
+  const handlePolygonClick = (polygon, event, { lat, lng, altitude }) => {
+    if (currentActiveTool == null) {
+      globeEl.current.pointOfView({ lat: lat, lng: lng }, 2000);
+    }
+  };
+
+  // Globe init
   useEffect(() => {
+    globeEl.current.pointOfView({ altitude: 4 }, 3000);
+  }, []);
+
+  // Handle auto rotation
+  useEffect(() => {
+    console.log("received " + shouldAutoRotate);
     // Auto-rotate
     globeEl.current.controls().autoRotate = shouldAutoRotate;
     globeEl.current.controls().autoRotateSpeed = 0.3;
-
-    globeEl.current.pointOfView({ altitude: 4 }, 3000);
-  }, []);
+  }, [shouldAutoRotate]);
 
   return (
     <Globe
@@ -41,9 +52,7 @@ function World({
       polygonSideColor={polygonSideColor}
       polygonLabel={polygonLabel}
       polygonsTransitionDuration={transitionDuration}
-      onPolygonClick={function (polygon, event, { lat, lng, altitude }) {
-        globeEl.current.pointOfView({ lat: lat, lng: lng }, 2000);
-      }}
+      onPolygonClick={handlePolygonClick}
       showAtmosphere={showAtmosphere}
       showGraticules={showGraticules}
     />
