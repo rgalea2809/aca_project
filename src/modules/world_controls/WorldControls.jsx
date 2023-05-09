@@ -186,7 +186,7 @@ export default function WorldControls({
               <FormControlLabel
                 value="twoPointDistance"
                 control={<Radio onClick={handleActiveToolChange} />}
-                label="Distancia entre 2 puntos"
+                label="Distancia entre 2 polígonos"
               />
             </RadioGroup>
           </FormControl>
