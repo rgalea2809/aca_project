@@ -8,15 +8,18 @@ import CountriesLayer from "./datasets/countries";
 
 function App() {
   const [activeLayer, setActiveLayer] = useState(null);
+  const [shouldAutoRotate, setShouldAutoRotate] = useState(true);
   const [currentLayerHeight, setCurrentLayerHeight] = useState(() => {
     return 0;
   });
+  const [polygonCapColor, setpolygonCapColor] = useState("#ff0000");
+  const [currentActiveTool, setCurrentActiveTool] = useState(null);
 
   const handleLayerChange = (newLayerName) => {
     switch (newLayerName) {
       case "lakes":
         console.log("Changed to lakes");
-        setActiveLayer(Lakes.features);
+        setActiveLayer(LakesMin.features);
         break;
       case "countries":
         console.log("Changed to countries");
@@ -27,6 +30,11 @@ function App() {
     }
   };
 
+  const handleOnAutoRotateChange = (newAutoRotateValue) => {
+    console.log("updated with " + newAutoRotateValue);
+    setShouldAutoRotate(newAutoRotateValue);
+  };
+
   const handleLayerHeightChange = (newHeight) => {
     console.log(newHeight / 5);
     setCurrentLayerHeight(() => {
@@ -34,20 +42,33 @@ function App() {
     });
   };
 
+  const handlePolygonCapColorChange = (newColor) => {
+    setpolygonCapColor(newColor);
+  };
+
+  const handleCurrentActiveToolChange = (newActiveTool) => {
+    setCurrentActiveTool(newActiveTool);
+  };
+
   return (
     <div className="App">
       <WorldControls
         className="World-Controls"
         onLayerChange={handleLayerChange}
+        onAutoRotateChange={handleOnAutoRotateChange}
         onLayerHeightChange={handleLayerHeightChange}
+        onLayerCapColorChange={handlePolygonCapColorChange}
+        onActiveToolChange={handleCurrentActiveToolChange}
       />
       <World
         className="World-Section"
         showAtmosphere={false}
         showGraticules={true}
-        shouldAutoRotate={true}
+        shouldAutoRotate={shouldAutoRotate}
         polygonsData={activeLayer}
         polygonAltitude={currentLayerHeight}
+        polygonCapColor={() => polygonCapColor}
+        currentActiveTool={currentActiveTool}
       />
     </div>
   );
