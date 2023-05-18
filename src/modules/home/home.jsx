@@ -30,7 +30,10 @@ export default function Home() {
 
   return (
     <div className="block w-screen h-screen">
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }} className="w-full">
+      <Box
+        sx={{ borderBottom: 1, borderColor: "divider" }}
+        className="w-full bg-slate-50"
+      >
         <Tabs
           value={currentTab}
           onChange={handleTabChange}

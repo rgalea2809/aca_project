@@ -86,7 +86,7 @@ export default function WorldControls({
   const drawerItems = (anchor) => (
     <Box
       sx={{
-        width: anchor === "top" || anchor === "bottom" ? "auto" : 250,
+        width: 250,
       }}
       role="presentation"
     >
