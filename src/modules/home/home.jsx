@@ -1,10 +1,8 @@
 import { useState } from "react";
 import "./home.css";
 import Globe from "../globe/Globe";
-import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import GeoPortal from "../geoportal/GeoPortal";
 
@@ -13,13 +11,12 @@ function TabPanel(props) {
 
   return (
     <div
-      role="tabpanel"
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+      {value === index && <Box className="">{children}</Box>}
     </div>
   );
 }
@@ -27,13 +24,13 @@ function TabPanel(props) {
 export default function Home() {
   const [currentTab, setCurrentTab] = useState(0);
 
-  const handleTabChange = (event, newValue) => {
+  const handleTabChange = (_, newValue) => {
     setCurrentTab(newValue);
   };
 
   return (
-    <div className="block">
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+    <div className="block w-screen h-screen">
+      <Box sx={{ borderBottom: 1, borderColor: "divider" }} className="w-full">
         <Tabs
           value={currentTab}
           onChange={handleTabChange}
@@ -44,7 +41,9 @@ export default function Home() {
         </Tabs>
       </Box>
       <TabPanel value={currentTab} index={0}>
-        <GeoPortal />
+        <div className="block">
+          <GeoPortal />
+        </div>
       </TabPanel>
       <TabPanel value={currentTab} index={1}>
         <div className="block">
