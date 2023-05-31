@@ -1,6 +1,6 @@
 import { useState } from "react";
-import World from "./../world/World";
-import WorldControls from "./../world_controls/WorldControls";
+import World from "./../world_viewport/World";
+import WorldControls from "./../world_viewport_controls/WorldControls";
 import Lakes from "./../../datasets/lakes_stanford/lakes_stanford";
 import LakesMin from "./../../datasets/lakes_stanford/lakes_stanford_min";
 import CountriesLayer from "./../../datasets/countries";

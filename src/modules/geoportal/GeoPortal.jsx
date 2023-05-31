@@ -2,14 +2,12 @@ import * as React from "react";
 
 export default function GeoPortal() {
   return (
-    <div className="flex w-full">
-      <div className="">
-        <h1>Dashboard</h1>
-        <p>This is a dashboard.</p>
+    <div className="flex flex-row">
+      <div className="basis-1/4">
+        <p>Sidebar</p>
       </div>
-      <div className="grow">
-        <h2>Statistics</h2>
-        <p>Here are some statistics.</p>
+      <div className="basis-3/4 bg-red-800">
+        <p>body</p>
       </div>
     </div>
   );
