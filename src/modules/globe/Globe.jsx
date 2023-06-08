@@ -5,8 +5,7 @@ import Lakes from "./../../datasets/lakes_stanford/lakes_stanford";
 import LakesMin from "./../../datasets/lakes_stanford/lakes_stanford_min";
 import CountriesLayer from "./../../datasets/countries";
 
-export default function Globe() {
-  const [activeLayer, setActiveLayer] = useState(null);
+export default function Globe({ features }) {
   const [shouldAutoRotate, setShouldAutoRotate] = useState(true);
   const [currentLayerHeight, setCurrentLayerHeight] = useState(() => {
     return 0;
@@ -64,7 +63,7 @@ export default function Globe() {
         showAtmosphere={false}
         showGraticules={true}
         shouldAutoRotate={shouldAutoRotate}
-        polygonsData={activeLayer}
+        polygonsData={features}
         polygonAltitude={currentLayerHeight}
         polygonCapColor={() => polygonCapColor}
         currentActiveTool={currentActiveTool}

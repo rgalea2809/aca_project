@@ -26,7 +26,6 @@ import MailIcon from "@mui/icons-material/Mail";
 import { FormGroup } from "@mui/material";
 
 export default function WorldControls({
-  onLayerChange,
   onAutoRotateChange,
   onLayerHeightChange,
   onLayerCapColorChange,
@@ -36,16 +35,10 @@ export default function WorldControls({
   const [state, setState] = React.useState({
     left: false,
   });
-  const [currentLayer, setLayer] = React.useState(null);
   const [shouldAutoRotate, setShouldAutoRotate] = React.useState(true);
   const [heightSliderValue, setHeightSliderValue] = React.useState(0);
   const [polygonCapColor, setPolygonCapColor] = React.useState(initialCapColor);
   const [activeTool, setActiveTool] = React.useState(null);
-
-  const handleRadioLayerChange = (_, value) => {
-    setLayer(value);
-    onLayerChange(value);
-  };
 
   const handleShouldAutoRotateChange = (event) => {
     setShouldAutoRotate(event.target.checked);
@@ -90,38 +83,6 @@ export default function WorldControls({
       }}
       role="presentation"
     >
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography>Capas</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <FormControl>
-            <FormLabel id="demo-radio-buttons-group-label">Activa</FormLabel>
-            <RadioGroup
-              aria-labelledby="demo-radio-buttons-group-label"
-              name="radio-buttons-group"
-              value={currentLayer}
-              onChange={handleRadioLayerChange}
-            >
-              <FormControlLabel
-                value="countries"
-                control={<Radio />}
-                label="Paises"
-              />
-              <FormControlLabel
-                value="lakes"
-                control={<Radio />}
-                label="Lagos"
-              />
-            </RadioGroup>
-          </FormControl>
-        </AccordionDetails>
-      </Accordion>
-
       <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}

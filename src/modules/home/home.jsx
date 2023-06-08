@@ -23,9 +23,19 @@ function TabPanel(props) {
 
 export default function Home() {
   const [currentTab, setCurrentTab] = useState(0);
+  const [currentFeatures, setCurrentFeatures] = useState(null);
+  const [activeLayerName, setActiveLayerName] = useState(null);
 
   const handleTabChange = (_, newValue) => {
     setCurrentTab(newValue);
+  };
+
+  const handleFeaturesChange = (newFeatures) => {
+    setCurrentFeatures(newFeatures);
+  };
+
+  const handleActiveLayerNameChange = (newActiveLayerName) => {
+    setActiveLayerName(newActiveLayerName);
   };
 
   return (
@@ -45,12 +55,16 @@ export default function Home() {
       </Box>
       <TabPanel value={currentTab} index={0}>
         <div className="block">
-          <GeoPortal />
+          <GeoPortal
+            onFeaturesChange={handleFeaturesChange}
+            onActiveLayerNameChange={handleActiveLayerNameChange}
+            activeLayerName={activeLayerName}
+          />
         </div>
       </TabPanel>
       <TabPanel value={currentTab} index={1}>
         <div className="block">
-          <Globe />
+          <Globe features={currentFeatures} />
         </div>
       </TabPanel>
     </div>
