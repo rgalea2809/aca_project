@@ -11,8 +11,9 @@ import VectorSource from "ol/source/Vector";
 import XYZ from "ol/source/XYZ";
 import { transform } from "ol/proj";
 import { toStringXY } from "ol/coordinate";
+import { GeoJSON } from "ol/format";
 
-export default function OlMap(props) {
+export default function OlMap({ features, selectedGeoJsonLayer }) {
   // set intial state
   const [map, setMap] = useState();
   const [featuresLayer, setFeaturesLayer] = useState();
@@ -38,18 +39,20 @@ export default function OlMap(props) {
       target: mapElement.current,
       layers: [
         // USGS Topo
+        /*
         new TileLayer({
           source: new XYZ({
             url: "https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}",
           }),
         }),
+        */
 
         // Google Maps Terrain
-        /* new TileLayer({
+        new TileLayer({
           source: new XYZ({
-            url: 'http://mt0.google.com/vt/lyrs=p&hl=en&x={x}&y={y}&z={z}',
-          })
-        }), */
+            url: "http://mt0.google.com/vt/lyrs=p&hl=en&x={x}&y={y}&z={z}",
+          }),
+        }),
 
         initalFeaturesLayer,
       ],
@@ -71,13 +74,22 @@ export default function OlMap(props) {
 
   // update map if features prop changes - logic formerly put into componentDidUpdate
   useEffect(() => {
-    if (props.features != null && props.features.length > 0) {
+    if (
+      selectedGeoJsonLayer != null &&
+      selectedGeoJsonLayer.features.length > 0
+    ) {
       // may be null on first render
-
       // set features to map
+      const convertedFeatures = new GeoJSON().readFeatures(
+        selectedGeoJsonLayer
+      );
+
+      console.log(convertedFeatures);
+
       featuresLayer.setSource(
         new VectorSource({
-          features: props.features, // make sure features is an array
+          features: convertedFeatures, // make sure features is an array
+          featureProjection: "EPSG:3857",
         })
       );
 
@@ -86,7 +98,7 @@ export default function OlMap(props) {
         padding: [100, 100, 100, 100],
       });
     }
-  }, [props.features]);
+  }, [features]);
 
   // map click handler
   const handleMapClick = (event) => {

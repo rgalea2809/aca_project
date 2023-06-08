@@ -19,39 +19,43 @@ import CountriesLayer from "./../../datasets/countries";
 
 export default function GeoPortal({
   onFeaturesChange,
+  activeFeatures,
   onActiveLayerNameChange,
   activeLayerName,
+  onActiveGeoJsonLayerChange,
+  activeGeoJsonLayer,
 }) {
-  const [activeLayer, setActiveLayer] = React.useState(null);
-  const [activeLayerName, setActiveLayerName] = React.useState(null);
-
   const handleLayerChange = (newLayerName) => {
     switch (newLayerName) {
       case "lakes":
         console.log("Changed to lakes");
-        setActiveLayer(LakesMin.features);
-        setActiveLayerName("lakes");
+        onActiveLayerNameChange("lakes");
         onFeaturesChange(LakesMin.features);
+        onActiveGeoJsonLayerChange(LakesMin);
         break;
       case "countries":
         console.log("Changed to countries");
-        setActiveLayer(CountriesLayer.features);
-        setActiveLayerName("countries");
+        onActiveLayerNameChange("countries");
         onFeaturesChange(CountriesLayer.features);
+        onActiveGeoJsonLayerChange(CountriesLayer);
         break;
       default:
-        setActiveLayer(null);
+        onActiveLayerNameChange(null);
     }
   };
 
   const handleLayersRadioChange = (_, value) => {
+    if (activeLayerName === value) {
+      onActiveLayerNameChange(null);
+      return;
+    }
+
     handleLayerChange(value);
-    onActiveLayerNameChange(value);
   };
 
   return (
     <div className="flex flex-row">
-      <div className="basis-1/4">
+      <div className="basis-1/4 bg-white">
         <Stack spacing={2}>
           <Accordion>
             <AccordionSummary
@@ -90,7 +94,10 @@ export default function GeoPortal({
       </div>
 
       <div className="basis-3/4">
-        <OlMap />
+        <OlMap
+          features={activeFeatures}
+          selectedGeoJsonLayer={activeGeoJsonLayer}
+        />
       </div>
     </div>
   );

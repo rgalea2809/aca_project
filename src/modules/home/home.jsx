@@ -25,6 +25,7 @@ export default function Home() {
   const [currentTab, setCurrentTab] = useState(0);
   const [currentFeatures, setCurrentFeatures] = useState(null);
   const [activeLayerName, setActiveLayerName] = useState(null);
+  const [activeGeoJsonLayer, setActiveGeoJsonLayer] = useState(null);
 
   const handleTabChange = (_, newValue) => {
     setCurrentTab(newValue);
@@ -36,6 +37,10 @@ export default function Home() {
 
   const handleActiveLayerNameChange = (newActiveLayerName) => {
     setActiveLayerName(newActiveLayerName);
+  };
+
+  const handleActiveGeoJsonLayerChange = (newActiveGeoJsonLayer) => {
+    setActiveGeoJsonLayer(newActiveGeoJsonLayer);
   };
 
   return (
@@ -57,8 +62,11 @@ export default function Home() {
         <div className="block">
           <GeoPortal
             onFeaturesChange={handleFeaturesChange}
+            activeFeatures={currentFeatures}
             onActiveLayerNameChange={handleActiveLayerNameChange}
             activeLayerName={activeLayerName}
+            onActiveGeoJsonLayerChange={handleActiveGeoJsonLayerChange}
+            activeGeoJsonLayer={activeGeoJsonLayer}
           />
         </div>
       </TabPanel>
