@@ -30,7 +30,6 @@ export default function WorldControls({
   onLayerHeightChange,
   onLayerCapColorChange,
   initialCapColor = "#ff0000",
-  onActiveToolChange,
 }) {
   const [state, setState] = React.useState({
     left: false,
@@ -38,7 +37,6 @@ export default function WorldControls({
   const [shouldAutoRotate, setShouldAutoRotate] = React.useState(true);
   const [heightSliderValue, setHeightSliderValue] = React.useState(0);
   const [polygonCapColor, setPolygonCapColor] = React.useState(initialCapColor);
-  const [activeTool, setActiveTool] = React.useState(null);
 
   const handleShouldAutoRotateChange = (event) => {
     setShouldAutoRotate(event.target.checked);
@@ -53,16 +51,6 @@ export default function WorldControls({
   const handlePolygonCapColorChange = (newValue) => {
     setPolygonCapColor(newValue);
     onLayerCapColorChange(newValue);
-  };
-
-  const handleActiveToolChange = (event) => {
-    if (event.target.value == activeTool) {
-      setActiveTool(null);
-      onActiveToolChange(null);
-    } else {
-      setActiveTool(event.target.value);
-      onActiveToolChange(event.target.value);
-    }
   };
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -122,34 +110,6 @@ export default function WorldControls({
               value={polygonCapColor}
               onChange={(e) => handlePolygonCapColorChange(e.target.value)}
             />
-          </FormControl>
-        </AccordionDetails>
-      </Accordion>
-
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2a-content"
-          id="panel2a-header"
-        >
-          <Typography>Herramientas</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <FormControl>
-            <FormLabel id="demo-radio-buttons-group-label">
-              Selecciona una herramienta
-            </FormLabel>
-            <RadioGroup
-              aria-labelledby="demo-radio-buttons-group-label"
-              name="radio-buttons-group"
-              value={activeTool}
-            >
-              <FormControlLabel
-                value="twoPointDistance"
-                control={<Radio onClick={handleActiveToolChange} />}
-                label="Distancia entre 2 polígonos"
-              />
-            </RadioGroup>
           </FormControl>
         </AccordionDetails>
       </Accordion>

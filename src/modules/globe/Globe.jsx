@@ -56,7 +56,6 @@ export default function Globe({ features }) {
         onAutoRotateChange={handleOnAutoRotateChange}
         onLayerHeightChange={handleLayerHeightChange}
         onLayerCapColorChange={handlePolygonCapColorChange}
-        onActiveToolChange={handleCurrentActiveToolChange}
       />
       <World
         className="World-Section"

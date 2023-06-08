@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./ol_map.css";
 import Map from "./components/map_container/map_container";
 import Layers from "./components/layers/layers";
 import TileLayer from "./components/layers/tile_layer";
@@ -9,6 +10,7 @@ import { fromLonLat, get } from "ol/proj";
 import GeoJSON from "ol/format/GeoJSON";
 import Controls from "./components/controls/controls";
 import FullScreenControl from "./components/controls/full_screen_control";
+import { useEffect } from "react";
 
 let styles = {
   MultiPolygon: new Style({
@@ -22,23 +24,35 @@ let styles = {
   }),
 };
 
-export default function OlMap({ features, selectedGeoJsonLayer }) {
+export default function OlMap({ features, mapSource, selectedGeoJsonLayer }) {
   const [center, setCenter] = useState([-94.9065, 38.9884]);
   const [zoom, setZoom] = useState(9);
+  const [geoJsonObject, setGeoJsonObject] = useState(null);
+  const [currentMapSource, setCurrentMapSource] = useState(null);
+
+  useEffect(() => {
+    setGeoJsonObject(null);
+    setGeoJsonObject(selectedGeoJsonLayer);
+  }, [selectedGeoJsonLayer]);
+
+  useEffect(() => {
+    setCurrentMapSource(mapSource);
+  }, [mapSource]);
 
   return (
-    <div>
+    <div className="bg-white h-full w-full">
       <Map center={fromLonLat(center)} zoom={zoom}>
         <Layers>
-          <TileLayer source={osm()} zIndex={0} />
-          {selectedGeoJsonLayer && (
+          <TileLayer source={currentMapSource} zIndex={0} />
+          {geoJsonObject && (
             <VectorLayer
               source={vector({
-                features: new GeoJSON().readFeatures(selectedGeoJsonLayer, {
+                features: new GeoJSON().readFeatures(geoJsonObject, {
                   featureProjection: get("EPSG:3857"),
                 }),
               })}
               style={styles.MultiPolygon}
+              zIndex={1}
             />
           )}
         </Layers>

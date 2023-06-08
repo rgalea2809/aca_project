@@ -19,19 +19,22 @@ const Map = ({ children, zoom, center }) => {
     setMap(mapObject);
     return () => mapObject.setTarget(undefined);
   }, []);
+
   // zoom change handler
   useEffect(() => {
     if (!map) return;
     map.getView().setZoom(zoom);
   }, [zoom]);
+
   // center change handler
   useEffect(() => {
     if (!map) return;
     map.getView().setCenter(center);
   }, [center]);
+
   return (
     <MapContext.Provider value={{ map }}>
-      <div ref={mapRef} className="ol-map">
+      <div ref={mapRef} className=" h-screen">
         {children}
       </div>
     </MapContext.Provider>
