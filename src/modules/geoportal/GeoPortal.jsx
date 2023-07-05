@@ -35,8 +35,8 @@ export default function GeoPortal({
       case "lakes":
         console.log("Changed to lakes");
         onActiveLayerNameChange("lakes");
-        onFeaturesChange(LakesMin.features);
-        onActiveGeoJsonLayerChange(LakesMin); // TODO: Change for normal lakes dataset
+        onFeaturesChange(Lakes.features);
+        onActiveGeoJsonLayerChange(Lakes); // TODO: Change for normal lakes dataset
         break;
       case "countries":
         console.log("Changed to countries");
