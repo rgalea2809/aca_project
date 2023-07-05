@@ -11,6 +11,7 @@ import GeoJSON from "ol/format/GeoJSON";
 import Controls from "./components/controls/controls";
 import FullScreenControl from "./components/controls/full_screen_control";
 import { useEffect } from "react";
+import DrawingLayer from "./components/drawing_layer/drawing_layer";
 
 let styles = {
   MultiPolygon: new Style({
@@ -31,7 +32,6 @@ export default function OlMap({ features, mapSource, selectedGeoJsonLayer }) {
   const [currentMapSource, setCurrentMapSource] = useState(null);
 
   useEffect(() => {
-    setGeoJsonObject(null);
     setGeoJsonObject(selectedGeoJsonLayer);
   }, [selectedGeoJsonLayer]);
 
@@ -55,6 +55,7 @@ export default function OlMap({ features, mapSource, selectedGeoJsonLayer }) {
               zIndex={1}
             />
           )}
+          <DrawingLayer />
         </Layers>
         <Controls>
           <FullScreenControl />

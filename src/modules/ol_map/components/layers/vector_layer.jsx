@@ -2,6 +2,7 @@ import { useContext, useEffect } from "react";
 import MapContext from "../map_container/map_context";
 import OLVectorLayer from "ol/layer/Vector";
 import { useState } from "react";
+
 const VectorLayer = ({ source, style, zIndex = 0 }) => {
   const { map } = useContext(MapContext);
   const [currentVectorLayer, setCurrentVectorLayer] = useState(null);
